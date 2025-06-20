@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,21 +29,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dvt.weatherapp.R
-import com.dvt.weatherapp.domain.DayData
-import com.dvt.weatherapp.domain.DummyData
-import com.dvt.weatherapp.domain.WeatherData
+import com.dvt.weatherapp.domain.DayDataDTO
+import com.dvt.weatherapp.util.DateUtils
+import com.dvt.weatherapp.util.ResourceProvider
 
 @Preview
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    weatherData: WeatherData? = DummyData.weatherData
+    viewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(weatherData?.currentDayImage ?: R.drawable.cloudy),
+            painter = painterResource(R.drawable.cloudy),
             contentDescription = "Current Day Image",
         )
 
@@ -67,9 +72,25 @@ fun HomeScreen(
             Spacer(
                 modifier = Modifier.height(16.dp)
             )
-            LazyColumn {
-                if (weatherData != null) {
-                    items(weatherData.days) { dayData ->
+            if (uiState.value.isLoading) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            } else if (uiState.value.error != null) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Error: ${uiState.value.error}",
+                    )
+                }
+            } else if (uiState.value.weatherData != null) {
+                LazyColumn {
+                    items(uiState.value.weatherData!!.list) { dayData ->
                         WeatherItem(dayData = dayData)
                     }
                 }
@@ -78,15 +99,10 @@ fun HomeScreen(
     }
 }
 
-@Preview
 @Composable
 fun WeatherItem(
     modifier: Modifier = Modifier,
-    dayData: DayData = DayData(
-        day = "Monday",
-        temperature = "25°C",
-        weatherIcon = R.drawable.property_120rainlight
-    )
+    dayData: DayDataDTO
 ) {
     Card(
         modifier
@@ -110,7 +126,7 @@ fun WeatherItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = dayData.day,
+                    text = DateUtils.getDayName(dayData.dt_txt),
                     fontSize = 26.sp,
                     fontStyle = FontStyle.Normal,
                     fontWeight = FontWeight.SemiBold,
@@ -118,7 +134,7 @@ fun WeatherItem(
                 )
 
                 Image(
-                    painter = painterResource(dayData.weatherIcon),
+                    painter = painterResource(ResourceProvider.getImageIcon(dayData.weather[0].icon)),
                     contentDescription = stringResource(R.string.weather_icon),
                     modifier = Modifier
                         .padding(8.dp)
@@ -126,7 +142,7 @@ fun WeatherItem(
                 )
             }
             Text(
-                text = dayData.temperature,
+                text = "${dayData.main.temperature}°C",
                 fontSize = 28.sp,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.SemiBold
