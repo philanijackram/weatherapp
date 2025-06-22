@@ -44,8 +44,24 @@ fun HomeScreen(
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
-    Box {
-        if (uiState.value.weatherData != null) {
+    if (uiState.value.isLoading) {
+        Box(
+            modifier = modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    } else if (uiState.value.error != null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Error: ${uiState.value.error}",
+            )
+        }
+    } else if (uiState.value.weatherData != null) {
+        Box {
             Image(
                 modifier = Modifier.fillMaxSize(),
                 painter = painterResource(
@@ -54,56 +70,27 @@ fun HomeScreen(
                 ),
                 contentDescription = "Current Day Image",
             )
-        }
-
-
-        Column {
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
-            Text(
-                text = "5 Day Forecast",
-                fontSize = 28.sp,
-                modifier = Modifier.padding(16.dp),
-                color = Color.White,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.SemiBold
-            )
-
-            Text(
-                text = DateUtils.getTodayByName(),
-                fontSize = 28.sp,
-                modifier = Modifier.padding(16.dp),
-                color = Color.White,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.SemiBold
-            )
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.White)
-                    .padding(1.dp)
-            )
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
-            if (uiState.value.isLoading) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else if (uiState.value.error != null) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Error: ${uiState.value.error}",
-                    )
-                }
-            } else if (uiState.value.weatherData != null) {
+            Column {
+                Spacer(
+                    modifier = Modifier.height(16.dp)
+                )
+                Text(
+                    text = "5 Day Forecast",
+                    fontSize = 28.sp,
+                    modifier = Modifier.padding(16.dp),
+                    color = Color.White,
+                    fontStyle = FontStyle.Normal,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White)
+                        .padding(1.dp)
+                )
+                Spacer(
+                    modifier = Modifier.height(16.dp)
+                )
                 LazyColumn {
                     items(DateUtils.getLatestPerWeekday(uiState.value.weatherData!!.list)) { dayData ->
                         WeatherItem(dayData = dayData)
@@ -147,7 +134,6 @@ fun WeatherItem(
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
-
                 Image(
                     painter = painterResource(ResourceProvider.getImageIcon(dayData.weather[0].icon)),
                     contentDescription = stringResource(R.string.weather_icon),
