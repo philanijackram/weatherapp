@@ -1,9 +1,9 @@
 package com.dvt.weatherapp.presentation.feature.home_screen
 
-import com.dvt.weatherapp.domain.WeatherData
+import com.dvt.weatherapp.domain.WeatherDataDTO
 
-sealed class HomeScreenUiState(
+data class HomeScreenUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
-    val weatherData: WeatherData? = null
+    val weatherData: WeatherDataDTO? = null
 )

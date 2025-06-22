@@ -6,6 +6,15 @@ plugins {
     alias(libs.plugins.safe.args)
     id("kotlin-kapt")
 }
+hilt {
+    enableAggregatingTask = false
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("com.squareup:javapoet:1.13.0")
+    }
+}
 
 android {
     namespace = "com.dvt.weatherapp"
@@ -56,7 +65,10 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.viewmodel)
     implementation(libs.compose.viewmodel)
-    implementation(libs.hilt.android)
+    implementation(libs.hilt)
+    implementation(libs.javapoet)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.navigation.fragment)
     kapt(libs.hilt.compiler)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
