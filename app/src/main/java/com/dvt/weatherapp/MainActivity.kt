@@ -2,6 +2,7 @@ package com.dvt.weatherapp
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
                 viewModel.getWeatherDataFromApi(location.latitude, location.longitude)
+                Log.d("MainActivity", "Latitude: ${location.latitude}, Longitude: ${location.longitude}")
             }
         }
         setContent {

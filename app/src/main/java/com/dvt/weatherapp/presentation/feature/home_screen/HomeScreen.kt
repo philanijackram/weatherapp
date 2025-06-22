@@ -45,11 +45,17 @@ fun HomeScreen(
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     Box {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(R.drawable.cloudy),
-            contentDescription = "Current Day Image",
-        )
+        if (uiState.value.weatherData != null) {
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painterResource(
+                    DateUtils.getTodayWeatherConditionIcon(uiState.value.weatherData!!.list)
+                        ?: R.drawable.cloudy
+                ),
+                contentDescription = "Current Day Image",
+            )
+        }
+
 
         Column {
             Spacer(
@@ -57,6 +63,15 @@ fun HomeScreen(
             )
             Text(
                 text = "5 Day Forecast",
+                fontSize = 28.sp,
+                modifier = Modifier.padding(16.dp),
+                color = Color.White,
+                fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Text(
+                text = DateUtils.getTodayByName(),
                 fontSize = 28.sp,
                 modifier = Modifier.padding(16.dp),
                 color = Color.White,
@@ -90,7 +105,7 @@ fun HomeScreen(
                 }
             } else if (uiState.value.weatherData != null) {
                 LazyColumn {
-                    items(uiState.value.weatherData!!.list) { dayData ->
+                    items(DateUtils.getLatestPerWeekday(uiState.value.weatherData!!.list)) { dayData ->
                         WeatherItem(dayData = dayData)
                     }
                 }
