@@ -17,6 +17,18 @@ configurations.all {
 }
 
 android {
+
+    flavorDimensions += "weatherapp"
+
+    productFlavors{
+        create("gms"){
+            dimension = "weatherapp"
+        }
+        create("hms"){
+            dimension = "weatherapp"
+        }
+    }
+
     namespace = "com.dvt.weatherapp"
     compileSdk = 35
 
@@ -72,6 +84,9 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.location.service)
+    //HMS
+    implementation(libs.hms.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
