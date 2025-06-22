@@ -18,17 +18,16 @@ class HomeScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeScreenUiState())
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
-    init {
-        getWeatherDataFromApi()
-    }
-
-    fun getWeatherDataFromApi() {
+    fun getWeatherDataFromApi(
+        latitude: Double,
+        longitude: Double
+    ) {
 
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             val response = weatherRepository.getWeatherForecast(
-                latitude = 33.6844,
-                longitude = -117.8265,
+                latitude = latitude,
+                longitude = longitude,
                 apiKey = "5f64db54396ef36bd2d3076cc46a3b95"
             )
 
