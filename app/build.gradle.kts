@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.viewmodel)
+    implementation(libs.compose.viewmodel)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.navigation.fragment)
