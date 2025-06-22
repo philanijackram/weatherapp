@@ -1,4 +1,4 @@
-package com.dvt.weatherapp.presentation.home_screen
+package com.dvt.weatherapp.presentation.feature.home_screen
 
 import com.dvt.weatherapp.domain.WeatherData
 
