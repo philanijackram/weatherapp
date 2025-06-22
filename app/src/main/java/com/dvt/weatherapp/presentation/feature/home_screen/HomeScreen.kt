@@ -23,6 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,9 +52,11 @@ fun HomeScreen(
             )
             Text(
                 text = "5 Day Forecast",
-                fontSize = 24.sp,
+                fontSize = 28.sp,
                 modifier = Modifier.padding(16.dp),
                 color = Color.White,
+                fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.SemiBold
             )
             Spacer(
                 modifier = Modifier
@@ -105,7 +109,13 @@ fun WeatherItem(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(text = dayData.day, fontSize = 26.sp)
+                Text(
+                    text = dayData.day,
+                    fontSize = 26.sp,
+                    fontStyle = FontStyle.Normal,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
 
                 Image(
                     painter = painterResource(dayData.weatherIcon),
@@ -115,7 +125,12 @@ fun WeatherItem(
                         .size(48.dp)
                 )
             }
-            Text(text = dayData.temperature)
+            Text(
+                text = dayData.temperature,
+                fontSize = 28.sp,
+                fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.SemiBold
+            )
         }
     }
 }
