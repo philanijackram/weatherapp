@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.dvt.weatherapp.location.LocationUtil
-import com.dvt.weatherapp.presentation.feature.home_screen.HomeScreen
-import com.dvt.weatherapp.presentation.feature.home_screen.HomeScreenViewModel
+import com.dvt.weatherapp.presentation.home_screen.HomeScreen
+import com.dvt.weatherapp.presentation.home_screen.HomeScreenViewModel
 import com.dvt.weatherapp.ui.theme.WeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 

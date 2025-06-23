@@ -1,8 +1,6 @@
 package com.dvt.weatherapp.util
 
-import com.dvt.weatherapp.R
 import com.dvt.weatherapp.domain.DayDataDTO
-import com.dvt.weatherapp.enums.WeatherCondition
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -21,25 +19,6 @@ object DateUtils {
         val formatter = DateTimeFormatter.ofPattern("EEEE")
         val today = LocalDateTime.now()
         return today.format(formatter)
-    }
-
-    fun getTodayWeatherConditionIcon(listDayData: List<DayDataDTO>): Int? {
-        var weatherIcon: Int? = null
-         getLatestPerWeekday(listDayData).forEach { dayData ->
-            if (getDayName(dayData.dt_txt) == getTodayByName()) {
-                weatherIcon = when (dayData.weather[0].main) {
-                    WeatherCondition.CLOUDY.title -> R.drawable.cloudy
-                    WeatherCondition.CLEAR.title -> R.drawable.forest
-                    WeatherCondition.RAINY.title -> R.drawable.rainy
-                    WeatherCondition.SUNNY.title -> R.drawable.sunny
-                    else -> {
-                        R.drawable.forest
-                    }
-                }
-            }
-
-        }
-        return weatherIcon
     }
 
     fun getLatestPerWeekday(listDayData: List<DayDataDTO>): List<DayDataDTO> {

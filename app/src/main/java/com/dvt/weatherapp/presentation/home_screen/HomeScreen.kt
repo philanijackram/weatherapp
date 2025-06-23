@@ -1,4 +1,4 @@
-package com.dvt.weatherapp.presentation.feature.home_screen
+package com.dvt.weatherapp.presentation.home_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -65,7 +65,7 @@ fun HomeScreen(
             Image(
                 modifier = Modifier.fillMaxSize(),
                 painter = painterResource(
-                    DateUtils.getTodayWeatherConditionIcon(uiState.value.weatherData!!.list)
+                    ResourceProvider.getTodayWeatherConditionIcon(uiState.value.weatherData!!.list)
                         ?: R.drawable.cloudy
                 ),
                 contentDescription = "Current Day Image",
@@ -135,7 +135,9 @@ fun WeatherItem(
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
                 Image(
-                    painter = painterResource(ResourceProvider.getImageIcon(dayData.weather[0].icon)),
+                    painter = painterResource(
+                        ResourceProvider.getImageIcon(dayData.weather[0].icon)
+                    ),
                     contentDescription = stringResource(R.string.weather_icon),
                     modifier = Modifier
                         .padding(8.dp)

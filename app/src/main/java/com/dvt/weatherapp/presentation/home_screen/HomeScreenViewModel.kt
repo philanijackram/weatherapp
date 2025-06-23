@@ -1,4 +1,4 @@
-package com.dvt.weatherapp.presentation.feature.home_screen
+package com.dvt.weatherapp.presentation.home_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,8 +27,7 @@ class HomeScreenViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(isLoading = true)
             val response = weatherRepository.getWeatherForecast(
                 latitude = latitude,
-                longitude = longitude,
-                apiKey = "5f64db54396ef36bd2d3076cc46a3b95"
+                longitude = longitude
             )
 
             if (response.isSuccessful) {
