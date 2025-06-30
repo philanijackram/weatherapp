@@ -25,19 +25,11 @@ class HomeScreenViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
-            val response = weatherRepository.getWeatherForecast(
-                latitude = latitude,
-                longitude = longitude
-            )
-
-            if (response.isSuccessful) {
-                _uiState.value = _uiState.value.copy(isLoading = false)
-                val weatherDataDTO = response.body()
-                if (weatherDataDTO != null) {
-                    _uiState.value = _uiState.value.copy(weatherData = weatherDataDTO)
-                }
-            } else {
-                _uiState.value = _uiState.value.copy(isLoading = false, error = response.message())
+            try {
+                val response = weatherRepository.getWeatherForecast(latitude, longitude)
+                _uiState.value = _uiState.value.copy(isLoading = false, weatherData = response)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(isLoading = false, error = e.localizedMessage)
             }
         }
     }
