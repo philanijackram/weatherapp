@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -20,11 +22,11 @@ android {
 
     flavorDimensions += "weatherapp"
 
-    productFlavors{
-        create("gms"){
+    productFlavors {
+        create("gms") {
             dimension = "weatherapp"
         }
-        create("hms"){
+        create("hms") {
             dimension = "weatherapp"
         }
     }
@@ -39,7 +41,17 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(localPropertiesFile.inputStream())
+        }
+        val apiKey = localProperties.getProperty("WEATHER_API_KEY") ?: ""
+        val baseUrl = localProperties.getProperty("BASE_URL") ?: ""
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "WEATHER_API_KEY", "\"$apiKey\"")
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
     }
 
     buildTypes {
@@ -60,6 +72,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

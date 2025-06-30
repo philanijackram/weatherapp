@@ -2,6 +2,8 @@ package com.dvt.weatherapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.dvt.weatherapp.R
+import com.dvt.weatherapp.BuildConfig
 import com.dvt.weatherapp.data.local.AppDatabase
 import com.dvt.weatherapp.data.local.WeatherDao
 import com.dvt.weatherapp.data.remote.WeatherApiService
@@ -23,7 +25,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -39,7 +41,7 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "weather_db"
+            context.getString(R.string.weather_db)
         ).build()
     }
 

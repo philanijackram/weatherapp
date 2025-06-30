@@ -3,5 +3,6 @@
     <string name="weather_icon">Weather Icon</string>
     <string name="enable">Enable</string>
     <string name="cancel">Cancel</string>
+    <string name="weather_db">weather_db</string>
     <string name="location_permission_message">This app requires your location, please enable the location in the settings</string>
 </resources>

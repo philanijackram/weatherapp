@@ -1,5 +1,6 @@
 package com.dvt.weatherapp.data.repository
 
+import com.dvt.weatherapp.BuildConfig
 import com.dvt.weatherapp.data.local.WeatherDao
 import com.dvt.weatherapp.data.local.WeatherEntity
 import com.dvt.weatherapp.data.local.toEntity
@@ -17,9 +18,9 @@ import javax.inject.Inject
 
 class WeatherRepository @Inject constructor(
     private val weatherApiService: WeatherApiService,
-    private val weatherDao: WeatherDao
+    private val weatherDao: WeatherDao,
 ) {
-    private val apiKey = "5f64db54396ef36bd2d3076cc46a3b95"
+    private val apiKey = BuildConfig.WEATHER_API_KEY
 
     suspend fun getWeatherForecast(
         latitude: Double,
