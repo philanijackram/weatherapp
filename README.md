@@ -1,24 +1,35 @@
-# weatherapp
-This is an application That shows a 5 day weather forecast based on the users location.
-It connects to the https://openweathermap.org/forecast5 Api to get the weather forecast.
+# Weather Forecast App 🌤️
 
-Architecture That is used is MVVM.
+A modern Android application that shows a **5-day weather forecast** based on the user’s location. It fetches real-time weather data using the [OpenWeatherMap 5-day Forecast API](https://openweathermap.org/forecast5).
 
-Here is the list of tools used in this project
+---
 
-Retrofit (For Network calls), 
-Jetpack Compose (Kotlin's Declarative UI), 
-Kotlin Coroutines (For asynchronous code), 
-Hilt (For dependancy injection), 
-HMS Location (to get the device location for devices that don't have Google play services),
-GMS Location (To get the device location for devices with Google Play Services),
+## Features ✨
 
-To build the project
--Android Studio IDE,  
--HMS or GMS device or emulator,
--Clone the project,
--Open the project,
--under build variant select the platform you are using either HMS or GMS.
--The run the project -HOORAY
+- Displays 5-day weather forecast for the user’s current location  
+- Supports both **HMS** (Huawei Mobile Services) and **GMS** (Google Mobile Services) devices  
+- Smooth, declarative UI built with **Jetpack Compose**  
+- Asynchronous network requests using **Kotlin Coroutines**  
+- Dependency injection powered by **Hilt**  
 
-The APK for this project can be found here. https://drive.google.com/drive/folders/16cA9CQMnHOqBteE_5JElA1sDdt0R4t0O?usp=drive_link
+---
+
+## Architecture 🏗️
+
+The app follows **MVVM (Model-View-ViewModel)** architecture to ensure clean separation of concerns and maintainable code.
+
+---
+
+## Tools & Libraries 🛠️
+
+- **Retrofit** – for network calls  
+- **Jetpack Compose** – for building UI  
+- **Kotlin Coroutines** – for asynchronous programming  
+- **Hilt** – for dependency injection  
+- **HMS Location** – get device location for Huawei devices without Google Play Services  
+- **GMS Location** – get device location for devices with Google Play Services  
+
+---
+
+
+   
